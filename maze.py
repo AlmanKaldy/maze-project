@@ -1,19 +1,22 @@
 import random
 
 def generate_maze(rows, cols):
-    # Инициализация пустого лабиринта (все стены)
     maze = [['#' for _ in range(cols)] for _ in range(rows)]
     
-    # Применяем алгоритм генерации лабиринта, например, рекурсивный бэктрекинг.
-    # Для простоты, делаем что-то базовое, как простые пути (модифицировать для сложных алгоритмов).
+    # Стартовая и конечная точки
+    maze[0][0] = ' '  # стартовая точка
+    maze[rows - 1][cols - 1] = ' '  # финишная точка
     
-    # Открываем стартовую и выходную точки
-    maze[0][0] = ' '  # Старт
-    maze[rows - 1][cols - 1] = ' '  # Выход
-    
-    # Генерация путей (простой пример, просто для иллюстрации)
-    for i in range(1, rows - 1, 2):
-        for j in range(1, cols - 1, 2):
-            maze[i][j] = ' '
-    
+    # Генерация пути с использованием алгоритма рекурсивного возврата
+    def carve_path(r, c):
+        directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        random.shuffle(directions)
+        for dr, dc in directions:
+            nr, nc = r + dr * 2, c + dc * 2
+            if 0 <= nr < rows and 0 <= nc < cols and maze[nr][nc] == '#':
+                maze[nr][nc] = ' '
+                maze[r + dr][c + dc] = ' '
+                carve_path(nr, nc)
+
+    carve_path(0, 0)
     return maze

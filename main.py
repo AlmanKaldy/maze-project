@@ -10,12 +10,23 @@ def main():
     print("Generated maze:")
     for row in maze:
         print("".join(row))
-    
-    path = find_path(maze, start, exit)
+
+    path = None
+    attempts = 0
+    while not path and attempts < 10:  # Попробуем максимум 10 раз
+        path = find_path(maze, start, exit)
+        if not path:
+            print("No path found. Regenerating maze...")
+            maze = generate_maze(rows, cols)
+            print("Generated maze again:")
+            for row in maze:
+                print("".join(row))
+        attempts += 1
+
     if path:
         print("Path found:", path)
     else:
-        print("No path found.")
+        print("No valid path found after multiple attempts.")
 
 if __name__ == "__main__":
     main()
