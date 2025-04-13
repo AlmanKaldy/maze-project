@@ -9,10 +9,10 @@ HEIGHT = 600
 # Цвета
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-RED = (255, 0, 0)
-YELLOW = (255, 255, 0)
+GREEN = (0, 255, 0)  # Старт
+RED = (255, 0, 0)    # Конец
+YELLOW = (255, 255, 0)  # Путь
+BLUE = (0, 0, 255)   # Стены
 
 # Инициализация pygame
 pygame.init()
@@ -79,6 +79,10 @@ def display_maze_with_path(maze, path):
         if path:
             for (x, y) in path:
                 pygame.draw.rect(screen, YELLOW, (y * CELL_SIZE, x * CELL_SIZE, CELL_SIZE, CELL_SIZE))
+        
+        # Рисуем стартовую и конечную точки
+        pygame.draw.rect(screen, GREEN, (0 * CELL_SIZE, 0 * CELL_SIZE, CELL_SIZE, CELL_SIZE))  # Старт
+        pygame.draw.rect(screen, RED, ((len(maze) - 1) * CELL_SIZE, (len(maze[0]) - 1) * CELL_SIZE, CELL_SIZE, CELL_SIZE))  # Конец
         
         # Обновляем экран
         pygame.display.flip()
