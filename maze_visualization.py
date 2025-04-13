@@ -21,7 +21,7 @@ pygame.init()
 def generate_maze(rows, cols):
     maze = [['#' for _ in range(cols)] for _ in range(rows)]
     maze[0][0] = ' '  # Старт
-    maze[rows - 1][cols - 1] = ' '  # Финиш
+    maze[0][cols - 1] = ' '  # Финиш (в верхний правый угол)
     
     def carve_path(r, c):
         directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
@@ -82,7 +82,7 @@ def display_maze_with_path(maze, path):
         
         # Рисуем стартовую и конечную точки
         pygame.draw.rect(screen, GREEN, (0 * CELL_SIZE, 0 * CELL_SIZE, CELL_SIZE, CELL_SIZE))  # Старт
-        pygame.draw.rect(screen, RED, ((len(maze) - 1) * CELL_SIZE, (len(maze[0]) - 1) * CELL_SIZE, CELL_SIZE, CELL_SIZE))  # Конец
+        pygame.draw.rect(screen, RED, ((0) * CELL_SIZE, (len(maze[0]) - 1) * CELL_SIZE, CELL_SIZE, CELL_SIZE))  # Конец в верхний правый угол
         
         # Обновляем экран
         pygame.display.flip()
@@ -99,7 +99,7 @@ def main():
     rows, cols = 10, 10  # Размер лабиринта
     maze = generate_maze(rows, cols)
     start = (0, 0)  # Точка старта
-    exit = (rows - 1, cols - 1)  # Точка выхода
+    exit = (0, cols - 1)  # Точка выхода (верхний правый угол)
 
     # Ищем путь
     path = find_path(maze, start, exit)
