@@ -6,21 +6,26 @@ def main():
     maze = generate_maze(rows, cols)
     start = (0, 0)  # Точка старта (верхний левый угол)
     exit = (rows - 1, cols - 1)  # Точка выхода (нижний правый угол)
-
-    # Проверка, что старт и финиш не заблокированы
-    if maze[start[0]][start[1]] == '#' or maze[exit[0]][exit[1]] == '#':
-        print("Start or exit point is blocked, regenerating maze...")
-        return
-
+    
     print("Generated maze:")
     for row in maze:
         print("".join(row))
-
+    
     path = find_path(maze, start, exit)
     if path:
         print("Path found:", path)
+        # Отображаем путь в лабиринте
+        for (x, y) in path:
+            if (x, y) != start and (x, y) != exit:
+                maze[x][y] = '.'  # Отображаем путь
     else:
-        print("No path found after multiple attempts.")
+        print("No path found. Regenerating maze...")
+        return  # Возвращаемся, если путь не найден
+    
+    # Выводим лабиринт с отображенным путем
+    print("Maze with path:")
+    for row in maze:
+        print("".join(row))
 
 if __name__ == "__main__":
     main()
